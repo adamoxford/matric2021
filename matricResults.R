@@ -6,7 +6,7 @@
 library("tidyverse")
 library("leaflet")
 library("dplyr")
-library("leafgl")
+#library("leafgl")
 library("leaflet.extras")
 
 schoolsData <- as.data.frame(read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQRGIMjdnID_DgFPq9JT0KFql7TxngN7_u5IR3ji86aCdqm4_BEhtcxYMiiClXNSfl4zcQNpvhiGNa_/pub?gid=1989311314&single=true&output=csv"))
@@ -23,18 +23,18 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   setView(lng = 24.47, lat = -28.47, zoom = 6)%>%
   addProviderTiles(providers$Stamen.TonerLite)%>%
   addCircleMarkers(data = schoolsImproved, lng = as.numeric(schoolsImproved$Longitude), lat = as.numeric(schoolsImproved$Latitude), label = schoolsImproved$School.name , popup = paste(
-                                                                                                          "<b>School</b>:", schoolsImproved$School.name,
-                                                                                                          "<br/><b>Quintile</b>:", schoolsImproved$Quintile, 
-                                                                                                          "<br/><b>Pass rate 2020</b>:", schoolsImproved$X2020....Pass,"%
+                                                                                                          "<b>", schoolsImproved$School.name, "</b>
+                                                                                                          <br/><b>Quintile</b>", schoolsImproved$Quintile, 
+                                                                                                          "<br/><b>Pass rate 2020</b>", schoolsImproved$X2020....Pass,"%
                                                                                                           <br/><b>Change year on year</b>", schoolsImproved$X..Change,
-                                                                                                          "<br /><br>School type", schoolsImproved$School.type), 
+                                                                                                          "<br /><br><b>School type</b>", schoolsImproved$School.type), 
                   radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2020....Pass), group = "Improved") %>%
   addCircleMarkers(data = schoolsWorse, lng = as.numeric(schoolsWorse$Longitude), lat = as.numeric(schoolsWorse$Latitude), label = schoolsWorse$School.name , popup = paste(
-    "<b>School</b>:", schoolsWorse$School.name,
-    "<br/><b>Quintile</b>:", schoolsWorse$Quintile, 
-    "<br/><b>Pass rate 2020</b>:", schoolsWorse$X2020....Pass,"%
+    "<b>", schoolsWorse$School.name,
+    "</b><br/><b>Quintile</b>", schoolsWorse$Quintile, 
+    "<br/><b>Pass rate 2020</b>", schoolsWorse$X2020....Pass,"%
      <br/><b>Change year on year</b>", schoolsWorse$X..Change,
-    "<br /><br>School type", schoolsWorse$School.type), 
+    "<br /><br/><b>School type</b>", schoolsWorse$School.type), 
     radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2020....Pass), group = "Worse") %>%
   addLayersControl(overlayGroups = c("Improved","Worse"), 
                    options = layersControlOptions(collapsed = FALSE))%>%

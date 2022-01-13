@@ -40,8 +40,7 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
  addSearchFeatures(
  targetGroups = c("Improved","Worse"),
  options = searchFeaturesOptions(
-  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE,
- autoCollapse = TRUE, hideMarkerOnCollapse = TRUE ))
+  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))
 
 m
 

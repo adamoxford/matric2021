@@ -25,14 +25,16 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   addCircleMarkers(data = schoolsImproved, lng = as.numeric(schoolsImproved$Longitude), lat = as.numeric(schoolsImproved$Latitude), label = schoolsImproved$School.name , popup = paste(
                                                                                                           "<b>School</b>:", schoolsImproved$School.name,
                                                                                                           "<br/><b>Quintile</b>:", schoolsImproved$Quintile, 
-                                                                                                          "<br/><b>Pass rate 2020</b>:", schoolsImproved$X2020....Pass,
-                                                                                                          "<br/><b>Change y-o-y</b>", schoolsImproved$X..Change), 
+                                                                                                          "<br/><b>Pass rate 2020</b>:", schoolsImproved$X2020....Pass,"%
+                                                                                                          <br/><b>Change year on year</b>", schoolsImproved$X..Change,
+                                                                                                          "<br /><br>School type", schoolsImproved$School.type), 
                   radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2020....Pass), group = "Improved") %>%
   addCircleMarkers(data = schoolsWorse, lng = as.numeric(schoolsWorse$Longitude), lat = as.numeric(schoolsWorse$Latitude), label = schoolsWorse$School.name , popup = paste(
     "<b>School</b>:", schoolsWorse$School.name,
     "<br/><b>Quintile</b>:", schoolsWorse$Quintile, 
-    "<br/><b>Pass rate 2020</b>:", schoolsWorse$X2020....Pass,
-    "<br/><b>Change y-o-y</b>", schoolsWorse$X..Change), 
+    "<br/><b>Pass rate 2020</b>:", schoolsWorse$X2020....Pass,"%
+     <br/><b>Change year on year</b>", schoolsWorse$X..Change,
+    "<br /><br>School type", schoolsWorse$School.type), 
     radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2020....Pass), group = "Worse") %>%
   addLayersControl(overlayGroups = c("Improved","Worse"), 
                    options = layersControlOptions(collapsed = FALSE))%>%
@@ -42,10 +44,10 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
  addSearchFeatures(
  targetGroups = c("Improved","Worse"),
  options = searchFeaturesOptions(
-  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))
+  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))%>%
 
  addLegend(map = m, data = schoolsData, "bottomright", pal = pal3, values = schoolsData$X2020....Pass, 
-          title = "Pass rate", na.label = "NA",
+          title = "Dot size = Quintile<BR><BR>Pass rate (%)", na.label = "NA",
           opacity = 1)
 
  

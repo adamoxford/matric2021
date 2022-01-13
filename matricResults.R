@@ -28,15 +28,15 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
                                                                                                           "<br/><b>Pass rate 2020</b>", schoolsImproved$X2020....Pass,"%
                                                                                                           <br/><b>Change year on year</b>", schoolsImproved$X..Change,
                                                                                                           "<br /><br><b>School type</b>", schoolsImproved$School.type), 
-                  radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2020....Pass), group = "Improved") %>%
+                  radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2020....Pass), group = "Improved over previous year") %>%
   addCircleMarkers(data = schoolsWorse, lng = as.numeric(schoolsWorse$Longitude), lat = as.numeric(schoolsWorse$Latitude), label = schoolsWorse$School.name , popup = paste(
     "<b>", schoolsWorse$School.name,
     "</b><br/><b>Quintile</b>", schoolsWorse$Quintile, 
     "<br/><b>Pass rate 2020</b>", schoolsWorse$X2020....Pass,"%
      <br/><b>Change year on year</b>", schoolsWorse$X..Change,
     "<br /><br/><b>School type</b>", schoolsWorse$School.type), 
-    radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2020....Pass), group = "Worse") %>%
-  addLayersControl(overlayGroups = c("Improved","Worse"), 
+    radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2020....Pass), group = "Worse than previous year") %>%
+  addLayersControl(overlayGroups = c("Improved over previous year","Worse than previous year"), 
                    options = layersControlOptions(collapsed = FALSE))%>%
 
 #  addSearchOSM(options = searchOptions(hideMarkerOnCollapse = TRUE, zoom = 7)) 
@@ -44,15 +44,16 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
  addSearchFeatures(
  targetGroups = c("Improved","Worse"),
  options = searchFeaturesOptions(
-  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))%>%
+  zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))
 
- addLegend(map = m, data = schoolsData, "bottomright", pal = pal3, values = schoolsData$X2020....Pass, 
+m
+
+addLegend(map = m, data = schoolsData, "bottomright", pal = pal3, values = schoolsData$X2020....Pass, 
           title = "Dot size = Quintile<BR><BR>Pass rate (%)", na.label = "NA",
           opacity = 1)
 
  
  
-m
 
 #  addCircleMarkers(lng = schoolsData$New.Long, lat = schoolsData$New.Lat, popup = schoolsData$Institution_Name, color = schoolsData$Quintile)
 

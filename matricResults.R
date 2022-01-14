@@ -1,12 +1,6 @@
-#install.packages("tidyverse")
-#install.packages("leaflet")
-#install.packages("leafgl")
-#install.packages("leafet-extras")
-
 library("tidyverse")
 library("leaflet")
 library("dplyr")
-#library("leafgl")
 library("leaflet.extras")
 
 schoolsData <- as.data.frame(read.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQRGIMjdnID_DgFPq9JT0KFql7TxngN7_u5IR3ji86aCdqm4_BEhtcxYMiiClXNSfl4zcQNpvhiGNa_/pub?gid=1989311314&single=true&output=csv"))
@@ -21,10 +15,12 @@ pal3 <- colorBin(palette = "RdYlGn", domain = schoolsData$X2020....Pass, bins = 
 
 m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   setView(lng = 24.47, lat = -28.47, zoom = 6)%>%
+  addTiles(urlTemplate = "", attribution = 'Source: Department of Education. For any missing or inaccuracte reports, please contact talktous@mg.co.za')%>%
   addProviderTiles(providers$Stamen.TonerLite)%>%
   addCircleMarkers(data = schoolsImproved, lng = as.numeric(schoolsImproved$Longitude), lat = as.numeric(schoolsImproved$Latitude), label = schoolsImproved$School.name , popup = paste(
                                                                                                           "<b>", schoolsImproved$School.name, "</b>
-                                                                                                          <br/><b>Quintile</b>", schoolsImproved$Quintile, 
+                                                                                                          <br/><b>Quintile</b>", schoolsImproved$Quintile,
+                                                                                                          "<br/><b>Students who sat exams</b>", schoolsImproved$X2020..Total.wrote,
                                                                                                           "<br/><b>Pass rate 2020</b>", schoolsImproved$X2020....Pass,"%
                                                                                                           <br/><b>Change year on year</b>", schoolsImproved$X..Change,
                                                                                                           "<br /><br><b>School type</b>", schoolsImproved$School.type), 
@@ -32,6 +28,7 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   addCircleMarkers(data = schoolsWorse, lng = as.numeric(schoolsWorse$Longitude), lat = as.numeric(schoolsWorse$Latitude), label = schoolsWorse$School.name , popup = paste(
     "<b>", schoolsWorse$School.name,
     "</b><br/><b>Quintile</b>", schoolsWorse$Quintile, 
+    "<br/><b>Students who sat exams</b>", schoolsWorse$X2020..Total.wrote,
     "<br/><b>Pass rate 2020</b>", schoolsWorse$X2020....Pass,"%
      <br/><b>Change year on year</b>", schoolsWorse$X..Change,
     "<br /><br/><b>School type</b>", schoolsWorse$School.type), 
@@ -39,8 +36,7 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   addLayersControl(overlayGroups = c("Improved over previous year","Worse than previous year"), 
                    options = layersControlOptions(collapsed = FALSE))%>%
 
-#  addSearchOSM(options = searchOptions(hideMarkerOnCollapse = TRUE, zoom = 7)) 
-  
+
  addSearchFeatures(
  targetGroups = c("Improved over previous year","Worse than previous year"),
  options = searchFeaturesOptions(
@@ -55,8 +51,3 @@ addLegend(map = m, data = schoolsData, "bottomright", pal = pal3, values = schoo
  
  
 
-#  addCircleMarkers(lng = schoolsData$New.Long, lat = schoolsData$New.Lat, popup = schoolsData$Institution_Name, color = schoolsData$Quintile)
-
-m <- leaflet(options = leafletOptions(preferCanvas = TRUE)) %>%
-  addTiles()%>%
-  addMarkers(lng=30.33409, lat=-23.67264)

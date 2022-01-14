@@ -42,7 +42,7 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
 #  addSearchOSM(options = searchOptions(hideMarkerOnCollapse = TRUE, zoom = 7)) 
   
  addSearchFeatures(
- targetGroups = c("Improved","Worse"),
+ targetGroups = c("Improved over previous year","Worse than previous year"),
  options = searchFeaturesOptions(
   zoom = 10, openPopup = TRUE, firstTipSubmit = TRUE, collapsed = FALSE,  autoCollapse = FALSE, hideMarkerOnCollapse = TRUE ))
 

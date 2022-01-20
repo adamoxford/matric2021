@@ -8,9 +8,9 @@ schoolsData <- as.data.frame(read.csv("https://docs.google.com/spreadsheets/d/e/
 schoolsImproved <- schoolsData %>% filter(X..Change >= 0)
 schoolsWorse <-schoolsData %>% filter(X..Change < 0)
 
-pal <- colorBin(palette = "RdYlGn", domain = schoolsImproved$X2020....Pass, bins = 6,na.color = "#808080",)
-pal1 <- colorBin(palette = "RdYlGn", domain = schoolsWorse$X2020....Pass, bins = 6, na.color = "#808080",)
-pal3 <- colorBin(palette = "RdYlGn", domain = schoolsData$X2020....Pass, bins = 6, na.color = "#808080",)
+pal <- colorBin(palette = "RdYlGn", domain = schoolsImproved$X2021....Pass, bins = 6,na.color = "#808080",)
+pal1 <- colorBin(palette = "RdYlGn", domain = schoolsWorse$X2021....Pass, bins = 6, na.color = "#808080",)
+pal3 <- colorBin(palette = "RdYlGn", domain = schoolsData$X2021....Pass, bins = 6, na.color = "#808080",)
 
 
 m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
@@ -20,19 +20,19 @@ m <- leaflet(options = leafletOptions(preferCanvas = FALSE)) %>%
   addCircleMarkers(data = schoolsImproved, lng = as.numeric(schoolsImproved$Longitude), lat = as.numeric(schoolsImproved$Latitude), label = schoolsImproved$School.name , popup = paste(
                                                                                                           "<b>", schoolsImproved$School.name, "</b>
                                                                                                           <br/><b>Quintile</b>", schoolsImproved$Quintile,
-                                                                                                          "<br/><b>Students who sat exams</b>", schoolsImproved$X2020..Total.wrote,
-                                                                                                          "<br/><b>Pass rate 2020</b>", schoolsImproved$X2020....Pass,"%
+                                                                                                          "<br/><b>Students who sat exams</b>", schoolsImproved$X2021..Total.wrote,
+                                                                                                          "<br/><b>Pass rate 2021</b>", schoolsImproved$X2021....Pass,"%
                                                                                                           <br/><b>Change year on year</b>", schoolsImproved$X..Change,
                                                                                                           "<br /><br><b>School type</b>", schoolsImproved$School.type), 
-                  radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2020....Pass), group = "Same or improved over previous year") %>%
+                  radius = schoolsImproved$Quintile, color = ~pal(schoolsImproved$X2021....Pass), group = "Same or improved over previous year") %>%
   addCircleMarkers(data = schoolsWorse, lng = as.numeric(schoolsWorse$Longitude), lat = as.numeric(schoolsWorse$Latitude), label = schoolsWorse$School.name , popup = paste(
     "<b>", schoolsWorse$School.name,
     "</b><br/><b>Quintile</b>", schoolsWorse$Quintile, 
-    "<br/><b>Students who sat exams</b>", schoolsWorse$X2020..Total.wrote,
-    "<br/><b>Pass rate 2020</b>", schoolsWorse$X2020....Pass,"%
+    "<br/><b>Students who sat exams</b>", schoolsWorse$X2021..Total.wrote,
+    "<br/><b>Pass rate 2021</b>", schoolsWorse$X2021....Pass,"%
      <br/><b>Change year on year</b>", schoolsWorse$X..Change,
     "<br /><br/><b>School type</b>", schoolsWorse$School.type), 
-    radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2020....Pass), group = "Worse than previous year") %>%
+    radius = schoolsWorse$Quintile, color = ~pal1(schoolsWorse$X2021....Pass), group = "Worse than previous year") %>%
   addLayersControl(overlayGroups = c("Same or improved over previous year","Worse than previous year"), 
                    options = layersControlOptions(collapsed = FALSE))%>%
 
